@@ -5,10 +5,8 @@
 - mysql
 - bycript
 - knex
-- socket.io
-- passport
 - multer
-- redis
+
 
 # api management
 
@@ -48,7 +46,7 @@ response :
   "statusCode": 200,
   "message": "succes",
   "payload": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvZmkiLCJlbWFpbCI6InNvZmkuc2lkaWsxMkBnbWFpbC5jb20iLCJhbGFtYXQiOiJicmViZXMiLCJub190ZWxwIjoiMDg5NTMzODkzMzMzMCIsImZvdG9fcHJvZmlsIjpudWxsLCJiaW9ncmFmaSI6ImFrdSBhZGFsYWggc2VvcmFuZyBjdWN1IG5hYmkgYWRhbSIsImlhdCI6MTcwNjY2OTY4OH0.Zprqqt5cx34ju7sRjGHwGTPeJwHT-QSHZeBggI66r1s"
+    "token": <token unik>
   }
 }
 ```
