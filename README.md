@@ -91,7 +91,6 @@ request body :
 }
 ```
 
-- GET /user/profile
 
 ## follow friend
 
