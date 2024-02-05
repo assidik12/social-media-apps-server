@@ -1,6 +1,6 @@
 const express = require("express");
 const routerUser = express.Router();
-const { register, login, update } = require("../controllers/users");
+const { register, login, update, updateFoto } = require("../controllers/users");
 const response = require("../helpers/response");
 const multer = require("multer");
 const path = require("path");
@@ -10,7 +10,7 @@ const logStream = fs.createWriteStream("log.txt", { flags: "a" });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = "./uploads/profile";
+    const uploadPath = "./uploads";
     fs.mkdirSync(uploadPath, { recursive: true });
     cb(null, uploadPath);
   },
@@ -43,13 +43,10 @@ routerUser.use((req, res, next) => {
 routerUser.route("/auth/login").post(async (req, res) => {
   try {
     let result = await login(req.body);
-    if (result.success === true) {
-      response.successLogin(result, "succes", res);
-    } else {
-      response.errorLogin(result, res);
-    }
+
+    response.successLogin(result, "succes", res);
   } catch (e) {
-    throw e;
+    response.errorLogin(e, res);
   }
 });
 
@@ -70,5 +67,13 @@ routerUser.route("/update").post(middleware.single("foto"), async (req, res) => 
     response.errorLogin(e, res);
   }
 });
+
+// routerUser.route("/profilPicture").post(middleware.single("foto"), async (req, res, next) => {
+//   try {
+//     const result = await updateFoto(req.file);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 module.exports = routerUser;

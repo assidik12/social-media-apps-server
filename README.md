@@ -29,7 +29,7 @@ request body :
 }
 ```
 
-- POST /user/auth/login
+- POST /user/login
 
 request body :
 
