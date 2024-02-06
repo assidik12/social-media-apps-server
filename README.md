@@ -5,8 +5,10 @@
 - mysql
 - bycript
 - knex
+- socket.io
+- passport
 - multer
-
+- redis
 
 # api management
 
@@ -27,7 +29,7 @@ request body :
 }
 ```
 
-- POST /user/login
+- POST /user/auth/login
 
 request body :
 
@@ -46,7 +48,7 @@ response :
   "statusCode": 200,
   "message": "succes",
   "payload": {
-    "token": <token unik>
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvZmkiLCJlbWFpbCI6InNvZmkuc2lkaWsxMkBnbWFpbC5jb20iLCJhbGFtYXQiOiJicmViZXMiLCJub190ZWxwIjoiMDg5NTMzODkzMzMzMCIsImZvdG9fcHJvZmlsIjpudWxsLCJiaW9ncmFmaSI6ImFrdSBhZGFsYWggc2VvcmFuZyBjdWN1IG5hYmkgYWRhbSIsImlhdCI6MTcwNjY2OTY4OH0.Zprqqt5cx34ju7sRjGHwGTPeJwHT-QSHZeBggI66r1s"
   }
 }
 ```
@@ -91,6 +93,7 @@ request body :
 }
 ```
 
+- GET /user/profile
 
 ## follow friend
 

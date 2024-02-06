@@ -4,5 +4,6 @@ package.json
 
 .env
 log.txt
+contentLog.txt
 babel.config.json
 /uploads

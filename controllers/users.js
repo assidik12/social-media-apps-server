@@ -2,7 +2,6 @@ const valid = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const knex = require("../configs/database.config");
-const passport = require("passport");
 const fs = require("fs");
 
 exports.login = async (req) => {
@@ -10,7 +9,7 @@ exports.login = async (req) => {
     let { email, sandi } = req;
 
     const [selectedRows] = await knex.select("*").from("account_user").where({ email });
-    const fotoPath = `./uploads/${selectedRows.foto_profile}`;
+    const fotoPath = `./uploads/profile/${selectedRows.foto_profile}`;
 
     if (fs.existsSync(fotoPath)) {
       const fotoBase64 = Buffer.from(fs.readFileSync(fotoPath)).toString("base64");
@@ -20,7 +19,10 @@ exports.login = async (req) => {
           const isPasswordMatch = await bcrypt.compare(sandi, hashedPassword);
 
           if (isPasswordMatch) {
-            const token = jwt.sign({ username: selectedRows.username, email: selectedRows.email, alamat: selectedRows.alamat, no_telp: selectedRows.no_telp, biografi: selectedRows.biografi, foto_profile: fotoBase64 }, "secret_key");
+            const token = jwt.sign(
+              { id: selectedRows.id, username: selectedRows.username, email: selectedRows.email, alamat: selectedRows.alamat, no_telp: selectedRows.no_telp, biografi: selectedRows.biografi, foto_profile: fotoBase64 },
+              "secret_key"
+            );
 
             return { success: true, message: "Login success", token };
           } else {
@@ -34,7 +36,7 @@ exports.login = async (req) => {
       console.log("File does not exist.");
     }
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
