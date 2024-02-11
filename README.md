@@ -93,11 +93,22 @@ request body :
 }
 ```
 
-- GET /user/profile
+response body:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "succes",
+  "payload": {
+    "message": "Data pengguna berhasil di hapus"
+  }
+}
+```
 
 ## follow friend
 
-- POST /follow
+- POST users/follow
 
 request body :
 
@@ -109,7 +120,42 @@ request body :
 }
 ```
 
+response body :
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "succes",
+  "payload": {
+    "message": "add friends succes"
+  }
+}
+```
+
+- DELETE users/follow/id
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "succes",
+  "payload": {
+    "message": "unfollow succes"
+  }
+}
+```
+
 - GET /friends/user-id
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "succes",
+  "payload": []
+}
+```
 
 ## komentar
 
@@ -126,20 +172,40 @@ request body :
 }
 ```
 
-- DELET /comment/user ID
-
-request body :
+response body :
 
 ```json
 {
-  "id postingan": "id postingan",
-  "id user": "id users",
-  "tanggal komenn": "tanggal komenn",
-  "isi komentar": "isi komentar"
+  "success": true,
+  "statusCode": 200,
+  "message": "succes create comment",
+  "payload": []
 }
 ```
 
-- GET /comment
+- DELET /comment/user ID
+
+response :
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "succes"
+}
+```
+
+- GET /comment/id-posting
+
+response body :
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "succes"
+}
+```
 
 ## like
 

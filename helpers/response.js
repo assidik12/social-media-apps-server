@@ -1,18 +1,19 @@
 exports.successLogin = function (payload, message, res) {
   const datas = {
-    success: true,
-    statusCode: res.statusCode,
+    success: payload.success,
+    statusCode: payload.statusCode,
     message,
-    payload,
+    token: payload.token,
   };
   res.json(datas);
   res.end();
 };
 
-exports.errorLogin = function (message, res) {
+exports.errorLogin = function (message, url, statusCode, res) {
   const datas = {
     success: false,
-    statusCode: 400,
+    url,
+    statusCode,
     message,
   };
   res.json(datas);
@@ -22,7 +23,7 @@ exports.errorLogin = function (message, res) {
 exports.successCrateContent = function (payload, message, res) {
   const datas = {
     success: true,
-    statusCode: res.statusCode,
+    statusCode: payload.statusCode,
     message,
     payload,
   };
@@ -32,7 +33,7 @@ exports.successCrateContent = function (payload, message, res) {
 exports.errorCrateContent = function (payload, message, res) {
   const datas = {
     success: false,
-    statusCode: 400,
+    statusCode: payload.statusCode,
     message,
     payload,
   };

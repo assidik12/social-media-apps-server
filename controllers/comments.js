@@ -10,26 +10,30 @@ exports.createComment = async (req, date) => {
       foto: req.file,
       tanggal: date,
     });
-    return result;
+    return { result, success: true, statusCode: 200, message: "komentar ditambahkan" };
   } catch (error) {
-    throw error;
+    return { success: false, statusCode: 401, message: "terjadi kesalahan", error };
   }
 };
 
 exports.getAllComment = async (id) => {
   try {
     const result = await knex("komentar").select("*").where({ id_postingan: id });
-    return result;
+    if (result.length > 0) {
+      return { success: true, statusCode: 200, message: "komentar ditemukan", result };
+    } else {
+      return { success: false, statusCode: 401, message: "komentar tidak ditemukan", result };
+    }
   } catch (error) {
-    throw error;
+    return { success: false, statusCode: 401, message: "komentar tidak ditemukan", error };
   }
 };
 
 exports.deleteComment = async (id) => {
   try {
     const result = await knex("komentar").where({ id }).del();
-    return result;
+    return { success: true, statusCode: 200, message: "komentar dihapus", result };
   } catch (error) {
-    throw error;
+    return { success: false, statusCode: 401, message: "komentar tidak ditemukan", error };
   }
 };

@@ -1,5 +1,4 @@
-const express = require("express");
-const routerLikes = express.Router();
+const routerLikes = require("express").Router();
 const { successCrateContent, errorCrateContent } = require("../helpers/response");
 const { createLikes, getAllLike, unLike } = require("../controllers/likes");
 
@@ -13,7 +12,7 @@ routerLikes.post("/createLikes", async (req, res) => {
   }
 });
 
-routerLikes.get("/:id", async (req, res) => {
+routerLikes.post("/:id", async (req, res) => {
   try {
     const result = await getAllLike(req.params.id);
     result.length > 0 ? successCrateContent(result, "success get likes", res) : errorCrateContent(result, "failed to get likes", res);
@@ -30,3 +29,5 @@ routerLikes.delete("/:id", async (req, res) => {
     throw error;
   }
 });
+
+module.exports = routerLikes;

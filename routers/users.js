@@ -1,6 +1,5 @@
-const express = require("express");
-const routerUser = express.Router();
-const { register, login, update } = require("../controllers/users");
+const routerUser = require("express").Router();
+const { register, login, update, logout } = require("../controllers/users");
 const response = require("../helpers/response");
 const multer = require("multer");
 const path = require("path");
@@ -20,54 +19,46 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/jpg") {
-    cb(null, true);
-  } else {
-    cb(new Error("unsupported files", false));
-  }
+  file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/jpg" ? cb(null, true) : cb(new Error("unsupported files", false));
 };
 
-const middleware = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 10,
-  },
-  fileFilter: fileFilter,
-});
+const middleware = multer({ storage, limits: { fileSize: 1024 * 1024 * 10 }, fileFilter });
 
-routerUser.use((req, res, next) => {
-  logStream.write(`New query: ${req.method} ${req.originalUrl}\n`);
-  next();
-});
+routerUser.use((req, res, next) => logStream.write(`New query: ${req.method} ${req.originalUrl} : ${req.body.statusCode}\n`) && next());
 
 routerUser.route("/auth/login").post(async (req, res) => {
   try {
     let result = await login(req.body);
-    if (result.success === true) {
-      response.successLogin(result, "succes", res);
-    } else {
-      response.errorLogin(result, res);
-    }
+    response.successLogin(result, result.message, res);
   } catch (e) {
-    throw e;
+    response.errorLogin(e, req.originalUrl, 400, res);
   }
 });
 
 routerUser.route("/register").post(async (req, res) => {
   try {
     const result = await register(req.body);
-    response.successLogin(result, "succes", res);
+    response.successLogin(result, result.message, res);
   } catch (e) {
-    response.errorLogin(e, res);
+    response.errorLogin(e, req.originalUrl, 400, res);
   }
 });
 
 routerUser.route("/update").post(middleware.single("foto"), async (req, res) => {
   try {
     const result = await update(req.body, req.file.filename);
-    response.successLogin(result, "succes", res);
+    response.successLogin(result, result.message, res);
   } catch (e) {
-    response.errorLogin(e, res);
+    response.errorLogin(e, req.originalUrl, 400, res);
+  }
+});
+
+routerUser.route("/logout").post(async (req, res) => {
+  try {
+    const result = await logout(req.body);
+    response.successLogin(result, result.message, res);
+  } catch (e) {
+    response.errorLogin(e, req.originalUrl, 400, res);
   }
 });
 

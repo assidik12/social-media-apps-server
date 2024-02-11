@@ -5,8 +5,10 @@ const helmet = require("helmet");
 const port = 3000;
 const app = express();
 const users = require("./routers/users");
-const contents = require("./routers/content");
 const comments = require("./routers/comment");
+const likes = require("./routers/likes");
+const follows = require("./routers/follows");
+const content = require("./routers/contents");
 
 // Define the CORS middleware
 const corsOptions = {
@@ -31,7 +33,9 @@ app.use(bodyParser.json());
 
 app.use("/comments", comments);
 app.use("/users", users);
-app.use("/contents", contents);
+app.use("/follows", follows);
+app.use("/contents", content);
+app.use("/likes", likes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
